@@ -1,0 +1,16 @@
+@charset "EUC-KR";
+
+a {
+	text-decortion:none;
+	color:black;
+}
+
+a:hover {
+	text-decoration:underline;
+	color:black;
+}
+
+a:visit {
+	text-decoration:underline;
+	color:black;
+}
