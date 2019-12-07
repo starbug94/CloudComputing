@@ -46,6 +46,21 @@ import print_results
 if __name__ == '__main__':
     # If check won't go through, program will show error msg and exit
     FILE, NEW_FILE, TYPE = check.arguments()
+    # FILE = "test.xlsx"
+    # NEW_FILE = "test2.xlsx"
+
+    print("fffffffffffffffff")
+    print(FILE)
+    print(NEW_FILE)
+    #
+ 
+    # print(g.analyze_sentiment("좋다"))
+    # print(g.analyze_sentiment("나쁘다"))
+    # print(g.analyze_sentiment("love"))
+    # print(g.analyze_sentiment("hate"))
+    # print(g.analyze_sentiment("겨울왕국 재미없어요"))
+    # print(g.analyze_sentiment("wtf"))
+    # print(g.analyze_sentiment("fucking jejus"))
 
     if TYPE == '.txt':
         TXT = open(FILE, "r")
@@ -54,8 +69,16 @@ if __name__ == '__main__':
         print_results.text(SEN)
     elif TYPE == 'excel':
         DATA, ROWS_NB = xl.get_xl(FILE, NEW_FILE)
+        print(range(ROWS_NB));
+        print(tqdm(range(ROWS_NB)))
+
         for ROW in tqdm(range(ROWS_NB)):
+            print(ROW)
+            print("######")
+            print(DATA.iloc[ROW, 0])
+
             SEN = g.analyze_sentiment(DATA.iloc[ROW, 0])
+            print(SEN)
             DATA.iloc[ROW, 1] = round(SEN.score, 1) * 10
             DATA.iloc[ROW, 2] = round(SEN.magnitude, 1)
         DATA.to_excel(NEW_FILE, index=None)
