@@ -53,7 +53,7 @@ if __name__ == '__main__':
     print(FILE)
     print(NEW_FILE)
     #
- 
+
     # print(g.analyze_sentiment("좋다"))
     # print(g.analyze_sentiment("나쁘다"))
     # print(g.analyze_sentiment("love"))
