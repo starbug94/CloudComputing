@@ -41,6 +41,8 @@ import excel as xl
 import google_nl as g
 import print_results
 
+
+
 if __name__ == '__main__':
     # If check won't go through, program will show error msg and exit
     FILE, NEW_FILE, TYPE = check.arguments()
