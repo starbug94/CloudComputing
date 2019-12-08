@@ -1,38 +1,3 @@
-'''
-Natural Language Sentiment Analysis
-    using Google Cloud Natural Language API
-
-
-Accepted file types:
-    - .xls/.xlsx (! without a header)
-        for multi-analysis where each cell is analyzed individually
-    - .txt for a single analysis on the whole file
-
-Accepted languages(detected automatically) for Sentiment Analysis:
-    Language                            ISO-639-1 Code
-    Chinese (Simplified)	                zh
-    Chinese (Traditional)	                zh-Hant
-    English	                                en
-    French	                                fr
-    German	                                de
-    Italian	                                it
-    Japanese	                            ja
-    Korean	                                ko
-    Portuguese (Brazilian & Continental)	pt
-    Spanish	                                es
-https://cloud.google.com/natural-language/docs/languages
-
-
-SCORE of the sentiment ranges between -10 (negative) and 10 (positive)
-    and corresponds to the overall emotional leaning of the text.
-
-MAGNITUDE indicates the overall strength of emotion
-    (both positive and negative) within the given text, between 0.0 and +inf.
-
-
-Example usage:
-    python3 analyze.py test.xls
-'''
 
 # To show progress bar
 from tqdm import tqdm
@@ -41,6 +6,11 @@ import excel as xl
 import google_nl as g
 import print_results
 
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QVBoxLayout, QPushButton
+import pandas as pd
+import matplotlib.pyplot as plt
+from PyQt5.QtWidgets import QDialog
+
 
 
 if __name__ == '__main__':
@@ -48,19 +18,6 @@ if __name__ == '__main__':
     FILE, NEW_FILE, TYPE = check.arguments()
     # FILE = "test.xlsx"
     # NEW_FILE = "test2.xlsx"
-
-    print("fffffffffffffffff")
-    print(FILE)
-    print(NEW_FILE)
-    #
-
-    # print(g.analyze_sentiment("좋다"))
-    # print(g.analyze_sentiment("나쁘다"))
-    # print(g.analyze_sentiment("love"))
-    # print(g.analyze_sentiment("hate"))
-    # print(g.analyze_sentiment("겨울왕국 재미없어요"))
-    # print(g.analyze_sentiment("wtf"))
-    # print(g.analyze_sentiment("fucking jejus"))
 
     if TYPE == '.txt':
         TXT = open(FILE, "r")
@@ -85,3 +42,39 @@ if __name__ == '__main__':
         print_results.excel(NEW_FILE)
 
 # Project files
+df = pd.read_excel('C:/Users/홍석찬/Desktop/nlp-master/s_test.xlsx')
+dx = df[['Score']]
+
+class MyDialog(QDialog):
+    def __init__(self):
+
+        QDialog.__init__(self)
+
+        lblName = QLabel("원하는 데이터를 선택하세요")
+        btX = QPushButton("x axis")
+        btT = QPushButton("Exit")
+
+        print(btT);
+
+        layout = QVBoxLayout()
+        layout.addWidget(lblName)
+        layout.addWidget(btX)
+        layout.addWidget(btT)
+        self.setLayout(layout)
+
+        btX.clicked.connect(self.btnXClicked)
+        btT.clicked.connect(self.btnTClicked)
+
+    def btnXClicked(self):
+        plt.plot(dx)
+        plt.show()
+
+    def btnTClicked(self):
+        QPushButton(self,command=self.quit)
+
+app = QApplication([])
+dialog = MyDialog()
+dialog.show()
+app.exec_()
+
+
